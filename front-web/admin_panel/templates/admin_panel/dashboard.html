@@ -1,0 +1,90 @@
+<!-- front-web/admin_panel/templates/admin_panel/dashboard.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VozVecinal — Dashboard Admin</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+
+    <header class="header-admin">
+        <div class="contenedor header-admin-contenido">
+            <div>
+                <strong style="font-size: 1.2rem;">🏛️ VozVecinal</strong>
+                <span style="background: #ef4444; color: white; font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 4px; vertical-align: middle;">ADMIN PANEL</span>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.75rem;">
+                <label for="backend-selector">API Activa:</label>
+                <select id="backend-selector" style="background: white; border: none; font-weight: bold; border-radius: 4px; padding: 0.2rem;">
+                    <option value="http://127.0.0.1:8000/api">Python (DRF - :8000)</option>
+                    <option value="http://127.0.0.1:4000/api">Node.js (Express - :4000)</option>
+                </select>
+            </div>
+
+            <div>
+                <span id="user-display" style="font-size: 0.85rem; margin-right: 10px;"></span>
+                <button id="btn-logout" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Salir</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor" style="padding-top: 2rem;">
+        <section class="grid-metricas">
+            <div class="tarjeta-metrica">
+                <h3>Total Reclamos</h3>
+                <p id="metric-total" class="metrica-numero">-</p>
+            </div>
+            <div class="tarjeta-metrica">
+                <h3>Pendientes</h3>
+                <p id="metric-pendientes" class="metrica-numero" style="color: #d97706;">-</p>
+            </div>
+            <div class="tarjeta-metrica">
+                <h3>En Proceso</h3>
+                <p id="metric-proceso" class="metrica-numero" style="color: #2563eb;">-</p>
+            </div>
+            <div class="tarjeta-metrica">
+                <h3>Resueltos</h3>
+                <p id="metric-resueltos" class="metrica-numero" style="color: #16a34a;">-</p>
+            </div>
+        </section>
+
+        <section style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>Gestión de Reclamos</h2>
+                <select id="filtro-estado-admin" style="padding: 0.3rem; border-radius: 4px;">
+                    <option value="">Todos los Estados</option>
+                    <option value="1">Pendiente</option>
+                    <option value="2">En Proceso</option>
+                    <option value="3">Resuelto</option>
+                    <option value="4">Rechazado</option>
+                </select>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="tabla-admin">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Título / Descripción</th>
+                            <th>Categoría</th>
+                            <th>Vecino</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-reclamos-body">
+                        <tr><td colspan="7">Cargando datos desde la API...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="{% static 'js/admin/admin-dashboard.js' %}"></script>
+</body>
+</html>

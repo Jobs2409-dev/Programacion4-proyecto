@@ -1,0 +1,30 @@
+<!-- front-web/public/templates/public/mis_reclamos.html -->
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}VozVecinal — Mis Reclamos{% endblock %}
+
+{% block content %}
+<div class="contenedor" style="padding-top: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="color: #0f172a; font-size: 1.8rem;">Mi Panel de Reclamos</h1>
+            <p id="vecino-bienvenida" style="font-size: 0.9rem; color: #64748b;">Bienvenido/a a tu espacio ciudadano.</p>
+        </div>
+        <a href="/nuevo-reclamo/" class="btn-nav-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+            + Crear Nuevo Reclamo
+        </a>
+    </div>
+
+    <section class="tarjeta-formulario" style="max-width: 100%;">
+        <h2 style="font-size: 1.2rem; color: #1e40af; margin-bottom: 1rem;">Historial de Reportes Realizados</h2>
+        <div id="contenedor-mis-reclamos" class="incidencias-grid">
+            <p style="color: #64748b;">Cargando tus reclamos...</p>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'js/vecino/mis-reclamos.js' %}"></script>
+{% endblock %}

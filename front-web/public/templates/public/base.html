@@ -1,0 +1,62 @@
+<!-- front-web/public/templates/public/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VozVecinal — Portal Ciudadano{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/componentes.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <header class="header-publico">
+        <div class="contenedor header-contenedor">
+            <a href="/" class="brand-logo">🏛️ VozVecinal</a>
+
+            <nav class="nav-publico">
+                <a href="/" class="nav-link">Inicio</a>
+                <a href="/#reclamos-publicos" class="nav-link">Reclamos Abiertos</a>
+                <a href="/#estadisticas" class="nav-link">Transparencia</a>
+                
+                <div id="nav-user-actions" class="nav-user-actions">
+                    <a href="/login/" class="btn-nav-outline">Ingresar</a>
+                    <a href="/registro/" class="btn-nav-primary">Registrarse</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-contenido">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer-municipal">
+        <div class="contenedor footer-grid">
+            <div>
+                <strong class="footer-col-titulo">VozVecinal Municipal</strong>
+                <p>Plataforma participativa de gestión y resolución de incidencias urbanas.</p>
+            </div>
+            <div>
+                <strong style="color: #ffffff;">Enlaces Rápidos</strong>
+                <ul class="footer-lista">
+                    <li><a href="/nuevo-reclamo/">Reportar una incidencia</a></li>
+                    <li><a href="/mis-reclamos/">Seguimiento de mis reclamos</a></li>
+                    <li><a href="/panel/login/">Acceso Funcionarios</a></li>
+                </ul>
+            </div>
+            <div>
+                <strong style="color: #ffffff;">Atención Ciudadana</strong>
+                <p>Línea directa: 0800-MUNI (6864)<br>Goya, Corrientes, Argentina.</p>
+            </div>
+        </div>
+        <div class="contenedor footer-bottom">
+            © 2026 VozVecinal — Todos los derechos reservados.
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

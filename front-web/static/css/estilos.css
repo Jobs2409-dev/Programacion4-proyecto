@@ -1,0 +1,138 @@
+:root {
+    --color-primario: #1e40af;
+    --color-secundario: #16a34a;
+    --color-fondo: #f8fafc;
+    --color-texto: #1e293b;
+    --fuente-base: system-ui, -apple-system, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fuente-base);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.5;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Formulario Admin Login */
+.body-login-admin {
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.tarjeta-login {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+.campo-grupo {
+    margin-bottom: 1.25rem;
+}
+
+.campo-grupo label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #475569;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.campo-grupo input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.btn-bloque {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.btn-bloque:hover { background-color: #1d4ed8; }
+
+/* Dashboard Admin */
+.header-admin {
+    background-color: #0f172a;
+    color: white;
+    padding: 1rem 0;
+    border-bottom: 3px solid #2563eb;
+}
+
+.header-admin-contenido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.tarjeta-metrica {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 1.25rem;
+    border-radius: 8px;
+}
+
+.metrica-numero {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #e2e8f0;
+    font-size: 0.85rem;
+}
+
+.tabla-admin th, .tabla-admin td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.alerta-error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.oculta { display: none; }

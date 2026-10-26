@@ -1,0 +1,24 @@
+# Python / Django
+backend_python/.venv/
+backend_python/.env
+front-web/.venv/
+front-web/.env
+**/__pycache__/
+*.py[cod]
+
+# Node.js
+**/node_modules/
+**/dist/
+**/build/
+backend_nodejs/.env
+
+# Configuración de Entorno e IDEs
+.env
+.vscode/
+.idea/
+
+# Archivos del sistema y DB locales
+*.log
+*.sqlite3
+.DS_Store
+

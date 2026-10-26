@@ -1,0 +1,263 @@
+/* static/css/componentes.css */
+
+/* Layout e Identidad Pública */
+.header-publico {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 1rem 0;
+    border-bottom: 3px solid #2563eb;
+}
+
+.header-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav-publico {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+}
+
+.nav-user-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-left: 1rem;
+}
+
+/* Botones */
+.btn-nav-outline {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-nav-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Banner Hero */
+.hero-section {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    color: #ffffff;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero-contenedor {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-titulo {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-bajada {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+}
+
+.btn-cta-hero {
+    background-color: #16a34a;
+    color: #ffffff;
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+/* Métricas de Transparencia */
+.transparencia-seccion {
+    margin-top: -2rem;
+}
+
+.transparencia-grid {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.metrica-publica-num {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.num-azul { color: #1e40af; }
+.num-verde { color: #16a34a; }
+.num-celeste { color: #2563eb; }
+
+.metrica-publica-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+}
+
+/* Grid de Tarjetas de Reclamos */
+.seccion-incidencias {
+    margin-top: 3rem;
+}
+
+.incidencias-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.incidencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tarjeta-reclamo-pub {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.tarjeta-pub-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.badge-categoria {
+    font-size: 0.75rem;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.tarjeta-pub-titulo {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+}
+
+.tarjeta-pub-desc {
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.tarjeta-pub-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+}
+
+/* Formularios de Vecinos */
+.contenedor-form-centrado {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.tarjeta-formulario {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.form-select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    resize: vertical;
+}
+
+/* Footer */
+.footer-municipal {
+    background-color: #0f172a;
+    color: #94a3b8;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    border-top: 1px solid #334155;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.footer-col-titulo {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.footer-lista {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+    line-height: 1.8;
+}
+
+.footer-lista a {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #1e293b;
+    color: #64748b;
+}

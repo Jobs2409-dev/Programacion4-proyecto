@@ -1,0 +1,56 @@
+<!-- front-web/public/templates/public/index.html -->
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}VozVecinal — Inicio Ciudadano{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="contenedor hero-contenedor">
+        <h1 class="hero-titulo">Transformemos nuestra ciudad juntos</h1>
+        <p class="hero-bajada">Reportá problemas de alumbrado, baches, limpieza o espacios verdes directamente al municipio.</p>
+        <a href="/nuevo-reclamo/" class="btn-cta-hero">
+            📢 Crear un Reclamo Ahora
+        </a>
+    </div>
+</section>
+
+<!-- Sección de Transparencia Municipal -->
+<section id="estadisticas" class="contenedor transparencia-seccion">
+    <div class="transparencia-grid">
+        <div>
+            <span id="pub-metric-total" class="metrica-publica-num num-azul">-</span>
+            <p class="metrica-publica-label">Reclamos Ingresados</p>
+        </div>
+        <div>
+            <span id="pub-metric-resueltos" class="metrica-publica-num num-verde">-</span>
+            <p class="metrica-publica-label">Solucionados</p>
+        </div>
+        <div>
+            <span id="pub-metric-proceso" class="metrica-publica-num num-celeste">-</span>
+            <p class="metrica-publica-label">En Reparación</p>
+        </div>
+    </div>
+</section>
+
+<!-- Listado Público -->
+<section id="reclamos-publicos" class="contenedor seccion-incidencias">
+    <div class="incidencias-header">
+        <div>
+            <h2>Mapa de Incidencias Públicas</h2>
+            <p class="metrica-publica-label">Visualizá las situaciones reportadas por otros vecinos en la comunidad.</p>
+        </div>
+        <select id="filtro-categoria-publico" class="form-select">
+            <option value="">Todas las categorías</option>
+        </select>
+    </div>
+
+    <div id="contenedor-reclamos-publicos" class="incidencias-grid">
+        <p class="metrica-publica-label">Cargando reclamos comunitarios...</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'js/vecino/reclamos-publicos.js' %}"></script>
+{% endblock %}
