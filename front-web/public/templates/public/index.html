@@ -9,7 +9,9 @@
     <div class="contenedor hero-contenedor">
         <h1 class="hero-titulo">Transformemos nuestra ciudad juntos</h1>
         <p class="hero-bajada">Reportá problemas de alumbrado, baches, limpieza o espacios verdes directamente al municipio.</p>
-        <a href="/nuevo-reclamo/" class="btn-cta-hero">
+        
+        <!-- Cambiamos a id="btn-crear-reclamo-portal" para interceptar con JS antes de navegar -->
+        <a href="/nuevo-reclamo/" id="btn-crear-reclamo-portal" class="btn-cta-hero">
             📢 Crear un Reclamo Ahora
         </a>
     </div>
@@ -52,5 +54,10 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- Script de estado de usuario y header global -->
+<script src="{% static 'js/vecino/vecino-header.js' %}"></script>
+<!-- Script de intercepción de sesión para el portal -->
+<script src="{% static 'js/vecino/vecino-portal.js' %}"></script>
+<!-- Script existente de métricas e incidencias públicas -->
 <script type="module" src="{% static 'js/vecino/reclamos-publicos.js' %}"></script>
 {% endblock %}

@@ -5,58 +5,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}VozVecinal — Portal Ciudadano{% endblock %}</title>
+    <title>{% block title %}VozVecinal{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     <link rel="stylesheet" href="{% static 'css/componentes.css' %}">
-    {% block extra_head %}{% endblock %}
 </head>
 <body>
 
-    <header class="header-publico">
-        <div class="contenedor header-contenedor">
-            <a href="/" class="brand-logo">🏛️ VozVecinal</a>
-
-            <nav class="nav-publico">
-                <a href="/" class="nav-link">Inicio</a>
-                <a href="/#reclamos-publicos" class="nav-link">Reclamos Abiertos</a>
-                <a href="/#estadisticas" class="nav-link">Transparencia</a>
-                
-                <div id="nav-user-actions" class="nav-user-actions">
-                    <a href="/login/" class="btn-nav-outline">Ingresar</a>
-                    <a href="/registro/" class="btn-nav-primary">Registrarse</a>
-                </div>
+    <!-- Header / Navbar Principal -->
+    <header class="navbar-principal" style="background-color: #0f172a; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 2rem;">
+            <a href="/" style="font-size: 1.3rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                🏛️ VozVecinal
+            </a>
+            <nav style="display: flex; gap: 1rem;">
+                <a href="/" style="color: #cbd5e1; text-decoration: none; font-size: 0.9rem;">Inicio</a>
+                <a href="/#reclamos-publicos" style="color: #cbd5e1; text-decoration: none; font-size: 0.9rem;">Reclamos Abiertos</a>
+                <a href="/#estadisticas" style="color: #cbd5e1; text-decoration: none; font-size: 0.9rem;">Transparencia</a>
             </nav>
+        </div>
+
+        <!-- CONTENEDOR DINÁMICO: Aquí se dibuja el usuario o los botones según la sesión -->
+        <div id="header-usuario-panel">
+            <!-- Estado por defecto mientras carga JS -->
+            <a href="/login/" class="btn-nav-outline" style="color: white; border: 1px solid #475569; padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Ingresar</a>
+            <a href="/login/" class="btn-nav-solid" style="background-color: #2563eb; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; margin-left: 0.5rem;">Registrarse</a>
         </div>
     </header>
 
-    <main class="main-contenido">
+    <main>
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer-municipal">
-        <div class="contenedor footer-grid">
-            <div>
-                <strong class="footer-col-titulo">VozVecinal Municipal</strong>
-                <p>Plataforma participativa de gestión y resolución de incidencias urbanas.</p>
-            </div>
-            <div>
-                <strong style="color: #ffffff;">Enlaces Rápidos</strong>
-                <ul class="footer-lista">
-                    <li><a href="/nuevo-reclamo/">Reportar una incidencia</a></li>
-                    <li><a href="/mis-reclamos/">Seguimiento de mis reclamos</a></li>
-                    <li><a href="/panel/login/">Acceso Funcionarios</a></li>
-                </ul>
-            </div>
-            <div>
-                <strong style="color: #ffffff;">Atención Ciudadana</strong>
-                <p>Línea directa: 0800-MUNI (6864)<br>Goya, Corrientes, Argentina.</p>
-            </div>
-        </div>
-        <div class="contenedor footer-bottom">
-            © 2026 VozVecinal — Todos los derechos reservados.
-        </div>
-    </footer>
-
+    <!-- Script Global que lee el JWT en localStorage e inyecta el Estado de Sesión -->
+    <script src="{% static 'js/vecino/vecino-header.js' %}"></script>
+    <script src="{% static 'js/vecino/vecino-websocket.js' %}"></script>
+    
     {% block extra_js %}{% endblock %}
 </body>
 </html>

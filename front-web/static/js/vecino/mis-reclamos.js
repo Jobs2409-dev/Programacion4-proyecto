@@ -4,6 +4,8 @@ import { API_BASE_URL, getAuthHeaders, logout } from '../config/config.js';
 document.addEventListener('DOMContentLoaded', () => {
     verificarSesion();
     cargarMisReclamos();
+
+    window.addEventListener('reclamo:actualizado', cargarMisReclamos);
 });
 
 function verificarSesion() {

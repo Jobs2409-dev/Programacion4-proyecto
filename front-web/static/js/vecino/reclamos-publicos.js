@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtro) {
         filtro.addEventListener('change', (e) => cargarReclamosPublicos(e.target.value));
     }
+
+    window.addEventListener('reclamo:actualizado', () => {
+        cargarEstadisticasGlobales();
+        cargarReclamosPublicos(filtro ? filtro.value : '');
+    });
 });
 
 // 1. Consume GET /api/reclamos/estadisticas/ (AllowAny)

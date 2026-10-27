@@ -11,4 +11,5 @@ urlpatterns = [
     path('mis-reclamos/', mis_reclamos_view, name='mis_reclamos'),
     # Ruta de callback para el login social con Google
     path('login/callback/', TemplateView.as_view(template_name='public/login_callback.html'), name='login_callback'),
+    path('nuevo-reclamo/', TemplateView.as_view(template_name='public/nuevo_reclamo.html'), name='nuevo_reclamo'),
 ]
