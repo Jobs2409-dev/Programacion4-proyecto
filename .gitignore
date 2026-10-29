@@ -10,7 +10,7 @@ front-web/.env
 **/node_modules/
 **/dist/
 **/build/
-backend_nodejs/.env
+backend_node/.env
 
 # Configuración de Entorno e IDEs
 .env
@@ -22,3 +22,7 @@ backend_nodejs/.env
 *.sqlite3
 .DS_Store
 
+node_modules/
+.env
+.DS_Store
+*.log
