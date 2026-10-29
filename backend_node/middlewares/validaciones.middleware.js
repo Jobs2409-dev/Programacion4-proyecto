@@ -35,3 +35,27 @@ export const validarCategoria = [
         .isString().withMessage('La descripción debe ser un texto'),
     validarCampos
 ];
+
+export const validarCrearReclamo = [
+    body('titulo')
+        .notEmpty().withMessage('El título es obligatorio')
+        .isString().withMessage('El título debe ser un texto'),
+    body('descripcion')
+        .notEmpty().withMessage('La descripción es obligatoria')
+        .isString().withMessage('La descripción debe ser un texto'),
+    body('categoria_id')
+        .notEmpty().withMessage('La categoría (categoria_id) es obligatoria')
+        .isInt().withMessage('El categoria_id debe ser un número entero'),
+    body('ubicacion.direccion')
+        .optional()
+        .isString().withMessage('La dirección debe ser un texto'),
+    validarCampos
+];
+
+export const validarCambioEstado = [
+    body('estado')
+        .notEmpty().withMessage('El estado es obligatorio')
+        .isIn(['PENDIENTE', 'EN_PROCESO', 'RESUELTO', 'RECHAZADO'])
+        .withMessage('Estado no válido. Valores permitidos: PENDIENTE, EN_PROCESO, RESUELTO, RECHAZADO'),
+    validarCampos
+];

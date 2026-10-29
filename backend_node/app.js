@@ -3,13 +3,15 @@ import 'dotenv/config';
 import express from 'express';
 import authRoutes from './routes/auth.routes.js';
 import categoriaRoutes from './routes/categoria.routes.js';
+import reclamoRoutes from './routes/reclamo.routes.js';
 
 const app = express();
 
 app.use(express.json());
 
-// Rutas base del módulo Auth
+// Rutas del sistema
 app.use('/api/auth', authRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.use('/api/reclamos', reclamoRoutes);
 
 export default app;
