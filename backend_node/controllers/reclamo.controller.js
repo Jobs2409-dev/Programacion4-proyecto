@@ -7,7 +7,6 @@ export const crearReclamo = async (req, res) => {
     try {
         const { titulo, descripcion, categoria_id, ubicacion } = req.body;
 
-        // Validamos que la categoría exista realmente en MySQL
         const [filas] = await poolMySQL.query('SELECT id FROM reclamos_categoria WHERE id = ?', [categoria_id]);
         if (filas.length === 0) {
             return res.status(404).json({ mensaje: 'La categoría seleccionada no existe en el sistema' });
@@ -17,9 +16,24 @@ export const crearReclamo = async (req, res) => {
             titulo,
             descripcion,
             categoria_id,
-            usuario_id: req.usuario.id, // ID extraído del token JWT
-            ubicacion
+            usuario_id: req.usuario.id,
+            ubicacion: ubicacion || {},
+            estado_actual: 'PENDIENTE',
+            historial: [{
+                estado: 'PENDIENTE',
+                usuario_operador: req.usuario.id,
+                observacion: 'Reclamo creado por el ciudadano'
+            }]
         });
+
+        // Emitir alerta en tiempo real a los operadores conectados
+        const io = req.app.get('io');
+        if (io) {
+            io.emit('nuevo_reclamo', {
+                mensaje: 'Se ha registrado un nuevo reclamo ciudadano',
+                reclamo: nuevoReclamo
+            });
+        }
 
         res.status(201).json({
             mensaje: 'Reclamo creado exitosamente',
@@ -32,7 +46,7 @@ export const crearReclamo = async (req, res) => {
     }
 };
 
-// Listar reclamos (Si es VECINO ve solo los suyos; si es OPERADOR o ADMIN ve todos)
+// Listar reclamos
 export const obtenerReclamos = async (req, res) => {
     try {
         let filtro = {};
@@ -42,7 +56,8 @@ export const obtenerReclamos = async (req, res) => {
         }
 
         const reclamos = await Reclamo.find(filtro)
-            .populate('usuario_id', 'email rol')
+            .populate('usuario_id', 'email rol nombre apellido')
+            .populate('historial.usuario_operador', 'email rol nombre apellido')
             .sort({ createdAt: -1 });
 
         res.status(200).json({
@@ -57,25 +72,30 @@ export const obtenerReclamos = async (req, res) => {
     }
 };
 
-// Actualizar estado del reclamo (Exclusivo para OPERADOR o ADMIN)
+// Actualizar estado del reclamo
 export const cambiarEstadoReclamo = async (req, res) => {
     try {
         const { id } = req.params;
-        const { estado } = req.body;
+        const { estado, observacion } = req.body;
 
-        const reclamoActualizado = await Reclamo.findByIdAndUpdate(
-            id,
-            { estado },
-            { new: true, runValidators: true }
-        );
-
-        if (!reclamoActualizado) {
+        const reclamo = await Reclamo.findById(id);
+        if (!reclamo) {
             return res.status(404).json({ mensaje: 'Reclamo no encontrado' });
         }
 
+        reclamo.estado_actual = estado;
+
+        reclamo.historial.push({
+            estado,
+            usuario_operador: req.usuario.id,
+            observacion: observacion || `Estado actualizado a ${estado}`
+        });
+
+        await reclamo.save();
+
         res.status(200).json({
-            mensaje: 'Estado del reclamo actualizado',
-            reclamo: reclamoActualizado
+            mensaje: 'Estado del reclamo actualizado exitosamente',
+            reclamo
         });
 
     } catch (error) {

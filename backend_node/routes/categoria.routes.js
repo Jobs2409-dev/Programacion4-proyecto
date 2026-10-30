@@ -4,11 +4,13 @@ import { obtenerCategorias, crearCategoria } from '../controllers/categoria.cont
 import { verificarToken } from '../middlewares/auth.middleware.js';
 import { verificarAdmin } from '../middlewares/rol.middleware.js';
 import { validarCategoria } from '../middlewares/validaciones.middleware.js';
+import { obtenerAreas } from '../controllers/area.controller.js';
 
 const router = Router();
 
-// Consultar categorías
-router.get('/', verificarToken, obtenerCategorias);
+// La lectura del catálogo es pública; su modificación requiere rol ADMIN.
+router.get('/', obtenerCategorias);
+router.get('/areas', obtenerAreas);
 
 // Crear categoría (ADMIN)
 router.post('/', verificarToken, verificarAdmin, validarCategoria, crearCategoria);

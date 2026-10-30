@@ -15,14 +15,14 @@ import {
 
 const router = Router();
 
-// Todas las rutas requieren estar autenticado
+// Todas las rutas requieren token
 router.use(verificarToken);
 
-// Crear y listar reclamos
+// Crear y listar reclamos (JSON estándar)
 router.post('/', validarCrearReclamo, crearReclamo);
 router.get('/', obtenerReclamos);
 
-// Cambiar estado (Solo para Operadores o Admins)
+// Cambiar estado
 router.patch('/:id/estado', verificarOperadorOAdmin, validarCambioEstado, cambiarEstadoReclamo);
 
 export default router;

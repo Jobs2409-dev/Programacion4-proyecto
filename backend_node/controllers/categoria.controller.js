@@ -1,20 +1,28 @@
 // backend_node/controllers/categoria.controller.js
 import { poolMySQL } from '../config/mysql.js';
 
+// Obtener todas las categorías con los datos de su área correspondiente
 export const obtenerCategorias = async (req, res) => {
     try {
-        const [filas] = await poolMySQL.query('SELECT * FROM reclamos_categoria');
+        const query = `
+            SELECT 
+                c.id, 
+                c.nombre, 
+                c.descripcion, 
+                c.area_id,
+                a.nombre AS area_nombre
+            FROM reclamos_categoria c
+            LEFT JOIN reclamos_areadependencia a ON c.area_id = a.id
+        `;
+        const [categorias] = await poolMySQL.query(query);
 
-        res.status(200).json({
-            mensaje: 'Categorías obtenidas correctamente desde MySQL',
-            total: filas.length,
-            categorias: filas
-        });
+        res.status(200).json(categorias);
     } catch (error) {
-        console.error('Error al consultar categorías en MySQL:', error);
+        console.error('Error al obtener categorías:', error);
         res.status(500).json({
-            mensaje: 'Error al obtener las categorías desde la base de datos relacional',
-            detalle: error.message
+            ok: false,
+            mensaje: 'Error al consultar las categorías en MySQL',
+            error: error.message
         });
     }
 };
