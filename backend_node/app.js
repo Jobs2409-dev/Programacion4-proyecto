@@ -1,6 +1,7 @@
 // backend_node/app.js
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import authRoutes from './routes/auth.routes.js';
 import categoriaRoutes from './routes/categoria.routes.js';
 import reclamoRoutes from './routes/reclamo.routes.js';
@@ -8,6 +9,7 @@ import aiRoutes from './routes/ai.routes.js';
 
 const app = express();
 
+app.use(cors({origin: '*'}));
 app.use(express.json());
 
 // Rutas del sistema
