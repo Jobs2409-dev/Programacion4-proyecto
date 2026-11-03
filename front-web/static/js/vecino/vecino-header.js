@@ -1,3 +1,4 @@
+// front-web/static/js/vecino/vecino-header.js
 document.addEventListener('DOMContentLoaded', () => {
     actualizarHeaderSesion();
 });

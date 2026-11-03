@@ -1,8 +1,9 @@
 // front-web/static/js/vecino/vecino-nuevo-reclamo.js
+import { API_BASE_URL, getAuthHeaders } from '../config/config.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('access_token');
     
-    // 1. Control de acceso: Si no está logueado, alerta y redirige al login
     if (!token) {
         alert("Debés iniciar sesión para poder registrar un reclamo.");
         window.location.href = '/login/';
@@ -21,15 +22,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function cargarCategorias() {
     const selectCat = document.getElementById('categoria');
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/categorias/');
+        const response = await fetch(`${API_BASE_URL}/categorias/`);
         
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         
         const data = await response.json();
-        
-        // Extrae el arreglo independientemente de si la API usa paginación (data.results) o no (data)
         const categorias = Array.isArray(data) ? data : (data.results || []);
         
         if (categorias.length === 0) {
@@ -51,7 +48,6 @@ async function cargarCategorias() {
 async function handleCrearReclamo(e) {
     e.preventDefault();
     
-    const token = localStorage.getItem('access_token');
     const alertaError = document.getElementById('alerta-error');
     const btnGuardar = document.getElementById('btn-guardar');
 
@@ -63,7 +59,6 @@ async function handleCrearReclamo(e) {
     btnGuardar.disabled = true;
     btnGuardar.innerText = 'Enviando...';
 
-    // Verificamos que se haya seleccionado una categoría válida
     if (!categoriaId) {
         alertaError.innerText = 'Por favor seleccioná una categoría válida.';
         alertaError.style.display = 'block';
@@ -72,33 +67,23 @@ async function handleCrearReclamo(e) {
         return;
     }
 
-    const payload = {
-        titulo: titulo,
-        categoria: parseInt(categoriaId),
-        descripcion: descripcion
-    };
-
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/reclamos/', {
+        const response = await fetch(`${API_BASE_URL}/reclamos/`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(payload)
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+                titulo: titulo,
+                categoria: parseInt(categoriaId),
+                descripcion: descripcion
+            })
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            // Imprime en consola la respuesta detallada de validación de DRF
-            console.error('Detalle del error 400 devuelto por la API:', data);
-            
-            // Extrae el mensaje de error de DRF en texto legible
             const mensajeError = typeof data === 'object' 
                 ? JSON.stringify(data) 
                 : (data.detail || 'Error al validar los datos del reclamo.');
-                
             throw new Error(mensajeError);
         }
 

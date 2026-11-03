@@ -1,0 +1,26 @@
+/* C:\Users\jonat\Reclamos\front-web\static\css\admin\estilo_base.css */
+/* VozVecinal — Estilos Base para Admin Panel (admin_panel/base.html) */
+/* Hover suave para enlaces de la barra de navegación */
+.text-hover-white {
+    transition: color 0.2s ease;
+}
+
+.text-hover-white:hover {
+    color: #ffffff !important;
+}
+
+/* Hover para enlaces del footer */
+.footer-link {
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: #38bdf8 !important;
+    transform: translateX(3px);
+}
+
+/* Sombras y bordes finos */
+.navbar {
+    z-index: 1030;
+}

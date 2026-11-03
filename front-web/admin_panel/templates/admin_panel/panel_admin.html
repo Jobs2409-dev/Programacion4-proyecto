@@ -1,41 +1,135 @@
 <!-- front-web/admin_panel/templates/admin_panel/panel_admin.html -->
- {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VozVecinal — Acceso Administrativo</title>
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <title>VozVecinal — Panel de Control</title>
+    <link rel="stylesheet" href="{% static 'css/admin/estilo_panel.css' %}">
 </head>
-<body class="body-login-admin">
+<body class="admin-body">
 
-    <div class="tarjeta-login">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <h1 style="color: #1e40af; font-size: 1.5rem;">🏛️ VozVecinal</h1>
-            <h2 style="font-size: 1rem; color: #0f172a; margin-top: 0.5rem;">Panel de Control Municipal</h2>
-            <p style="font-size: 0.75rem; color: #64748b;">Acceso reservado a superusuarios/administradores</p>
+    <!-- Header Fijo Superior -->
+    <header class="header-admin-bar">
+        <div class="header-left">
+            <button id="btn-toggle-sidebar" class="btn-icon-menu" title="Toggle Menú">
+                ☰
+            </button>
+            <div class="brand-title">
+                <strong>🏛️ VozVecinal</strong>
+                <span class="badge-admin">ADMIN PANEL</span>
+            </div>
         </div>
 
-        <div id="alerta-error" class="alerta-error oculta"></div>
-
-        <form id="form-admin-login">
-            <div class="campo-grupo">
-                <label for="username">Usuario Administrador</label>
-                <input type="text" id="username" required placeholder="Ej: jo" autocomplete="username">
+        <div class="header-right">
+            <div class="selector-backend-container">
+                <label for="backend-selector">API:</label>
+                <select id="backend-selector">
+                    <option value="http://127.0.0.1:8000/api">Python (DRF - :8000)</option>
+                    <option value="http://127.0.0.1:4000/api">Node.js (Express - :4000)</option>
+                </select>
             </div>
+            <span id="user-display" class="user-name"></span>
+            <button id="btn-logout" class="btn-logout">Salir</button>
+        </div>
+    </header>
 
-            <div class="campo-grupo">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password">
-            </div>
+    <div class="admin-layout">
+        
+        <!-- Sidebar Fijo con Scroll Interno Propio -->
+        <aside id="admin-sidebar" class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-title">Entidades del Sistema</div>
+                
+                <a href="#" class="sidebar-link active" data-entidad="reclamos">
+                    <span class="icon">📢</span> Reclamos
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="operadores">
+                    <span class="icon">👥</span> Operadores / Usuarios
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="categorias">
+                    <span class="icon">🏷️</span> Categorías
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="areas">
+                    <span class="icon">🏢</span> Áreas Dependientes
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="estados">
+                    <span class="icon">📊</span> Estados
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="roles">
+                    <span class="icon">🛡️</span> Roles y Permisos
+                </a>
+                <a href="#" class="sidebar-link" data-entidad="logs">
+                    <span class="icon">📜</span> Logs de Seguridad
+                </a>
+            </nav>
+        </aside>
 
-            <button type="submit" id="btn-login" class="btn-bloque">
-                Ingresar al Panel
-            </button>
-        </form>
+        <!-- Área Principal de Trabajo con Scroll -->
+        <main class="admin-main-content">
+            
+            <!-- Métricas Resumen -->
+            <section class="grid-metricas">
+                <div class="tarjeta-metrica">
+                    <h3>Total Reclamos</h3>
+                    <p id="metric-total" class="metrica-numero">-</p>
+                </div>
+                <div class="tarjeta-metrica">
+                    <h3>Pendientes</h3>
+                    <p id="metric-pendientes" class="metrica-numero metrica-amarillo">-</p>
+                </div>
+                <div class="tarjeta-metrica">
+                    <h3>En Proceso</h3>
+                    <p id="metric-proceso" class="metrica-numero metrica-azul">-</p>
+                </div>
+                <div class="tarjeta-metrica">
+                    <h3>Resueltos</h3>
+                    <p id="metric-resueltos" class="metrica-numero metrica-verde">-</p>
+                </div>
+            </section>
+
+            <!-- Panel de Datos y Operaciones -->
+            <section class="tarjeta-panel">
+                <div class="panel-header-flex">
+                    <h2 id="titulo-vista-actual">Gestión de Reclamos</h2>
+
+                    <!-- Filtro Interno -->
+                    <div id="contenedor-filtro-interno" class="filtro-interno">
+                        <label for="filtro-estado-reclamo">Estado:</label>
+                        <select id="filtro-estado-reclamo" class="form-select-filtro">
+                            <option value="">Todos los Estados</option>
+                            <option value="1">Pendiente</option>
+                            <option value="2">En Proceso</option>
+                            <option value="3">Resuelto</option>
+                            <option value="4">Rechazado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tabla-responsive">
+                    <table class="tabla-admin">
+                        <thead id="tabla-headers">
+                            <tr>
+                                <th>#ID</th>
+                                <th>Título / Descripción</th>
+                                <th>Categoría</th>
+                                <th>Vecino</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-reclamos-body">
+                            <tr><td colspan="7">Cargando datos desde la API...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
     </div>
 
-    <script type="module" src="{% static 'js/admin-login.js' %}"></script>
+    <script type="module" src="{% static 'js/admin/admin-dashboard.js' %}"></script>
 </body>
 </html>

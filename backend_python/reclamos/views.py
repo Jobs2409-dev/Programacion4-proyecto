@@ -1,4 +1,5 @@
 # backend_python/reclamos/views.py
+from django.contrib.auth import get_user_model
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -18,6 +19,8 @@ from .repositories import ReclamoRepository
 from .services import ReclamoService, AuthService
 from .serializers import *
 from .permissions import *
+
+User = get_user_model()
 
 
 # Helper para auditoría de IP (Clase 8 - OWASP Logging & Monitoring)
@@ -72,6 +75,30 @@ class RolViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Rol.objects.all()
     serializer_class = RolSerializer
     permission_classes = [IsAuthenticated]
+
+
+class UsuarioViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.select_related('rol').all().order_by('id')
+    permission_classes = [IsAuthenticated, IsAdminUserRole]
+
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return UsuarioSerializer
+        return AdministrarUsuarioSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        usuario = self.get_object()
+        if usuario.pk == request.user.pk:
+            return Response(
+                {'detail': 'No puede eliminar el usuario con el que inició sesión.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if usuario.reclamos.exists() or usuario.registros_realizados.exists():
+            return Response(
+                {'detail': 'No se puede eliminar un usuario que tiene reclamos o registros asociados.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return super().destroy(request, *args, **kwargs)
 
 
 # ==============================================================================

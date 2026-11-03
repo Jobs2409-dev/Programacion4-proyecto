@@ -2,89 +2,230 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VozVecinal — Dashboard Admin</title>
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
-</head>
-<body>
-
-    <header class="header-admin">
-        <div class="contenedor header-admin-contenido">
-            <div>
-                <strong style="font-size: 1.2rem;">🏛️ VozVecinal</strong>
-                <span style="background: #ef4444; color: white; font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 4px; vertical-align: middle;">ADMIN PANEL</span>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.1); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.75rem;">
-                <label for="backend-selector">API Activa:</label>
-                <select id="backend-selector" style="background: white; border: none; font-weight: bold; border-radius: 4px; padding: 0.2rem;">
-                    <option value="http://127.0.0.1:8000/api">Python (DRF - :8000)</option>
-                    <option value="http://127.0.0.1:4000/api">Node.js (Express - :4000)</option>
-                </select>
-            </div>
-
-            <div>
-                <span id="user-display" style="font-size: 0.85rem; margin-right: 10px;"></span>
-                <button id="btn-logout" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Salir</button>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VozVecinal — Panel de Control</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Estilos Personalizados del Panel -->
+    <link rel="stylesheet" href="{% static 'css/admin/estilo_panel.css' %}" />
+  </head>
+  <body class="admin-body bg-light">
+    <!-- Header Fijo Superior -->
+    <header class="header-admin-bar">
+      <div class="header-left">
+        <button id="btn-toggle-sidebar" class="btn-icon-menu" title="Toggle Menú"><i class="bi bi-list"></i></button>
+        <div class="brand-title" id="brand-home" style="cursor: pointer;">
+          <strong>🏛️ VozVecinal</strong>
+          <span class="badge-admin">ADMIN PANEL</span>
         </div>
+      </div>
+
+      <div class="header-right">
+        <span id="user-display" class="user-name"></span>
+        <button id="btn-logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Salir</button>
+      </div>
     </header>
 
-    <main class="contenedor" style="padding-top: 2rem;">
-        <section class="grid-metricas">
-            <div class="tarjeta-metrica">
-                <h3>Total Reclamos</h3>
-                <p id="metric-total" class="metrica-numero">-</p>
+    <div class="admin-layout">
+      <!-- Sidebar Lateral Fija -->
+      <aside id="admin-sidebar" class="admin-sidebar">
+        <nav class="sidebar-nav">
+          <div class="sidebar-section-title">Entidades del Sistema</div>
+
+          <a href="#" class="sidebar-link active" data-entidad="dashboard"><span class="icon">📊</span> Panel Principal</a>
+          <a href="#" class="sidebar-link" data-entidad="reclamos"><span class="icon">📢</span> Reclamos</a>
+          <a href="#" class="sidebar-link" data-entidad="operadores"><span class="icon">👥</span> Operadores / Usuarios</a>
+          <a href="#" class="sidebar-link" data-entidad="categorias"><span class="icon">🏷️</span> Categorías</a>
+          <a href="#" class="sidebar-link" data-entidad="areas"><span class="icon">🏢</span> Áreas Dependientes</a>
+          <a href="#" class="sidebar-link" data-entidad="estados"><span class="icon">📈</span> Estados</a>
+          <a href="#" class="sidebar-link" data-entidad="roles"><span class="icon">🛡️</span> Roles y Permisos</a>
+          <a href="#" class="sidebar-link" data-entidad="logs"><span class="icon">📜</span> Logs de Seguridad</a>
+        </nav>
+      </aside>
+
+      <!-- Área Principal de Trabajo -->
+      <main class="admin-main-content">
+        <!-- VISTA 1: Métricas Resumen -->
+        <section id="seccion-metricas">
+          <div class="mb-4">
+            <h2 class="fw-bold text-dark mb-1">Resumen General</h2>
+            <p class="text-muted small mb-0">Estado actual de la plataforma en tiempo real</p>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="tarjeta-metrica b-start-primary">
+                <span class="metrica-titulo">Total Reclamos</span>
+                <p id="metric-total" class="metrica-numero text-dark">-</p>
+              </div>
             </div>
-            <div class="tarjeta-metrica">
-                <h3>Pendientes</h3>
-                <p id="metric-pendientes" class="metrica-numero" style="color: #d97706;">-</p>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="tarjeta-metrica b-start-amarillo">
+                <span class="metrica-titulo">Pendientes</span>
+                <p id="metric-pendientes" class="metrica-numero metrica-amarillo">-</p>
+              </div>
             </div>
-            <div class="tarjeta-metrica">
-                <h3>En Proceso</h3>
-                <p id="metric-proceso" class="metrica-numero" style="color: #2563eb;">-</p>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="tarjeta-metrica b-start-azul">
+                <span class="metrica-titulo">En Proceso</span>
+                <p id="metric-proceso" class="metrica-numero metrica-azul">-</p>
+              </div>
             </div>
-            <div class="tarjeta-metrica">
-                <h3>Resueltos</h3>
-                <p id="metric-resueltos" class="metrica-numero" style="color: #16a34a;">-</p>
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="tarjeta-metrica b-start-verde">
+                <span class="metrica-titulo">Resueltos</span>
+                <p id="metric-resueltos" class="metrica-numero metrica-verde">-</p>
+              </div>
             </div>
+          </div>
         </section>
 
-        <section style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2>Gestión de Reclamos</h2>
-                <select id="filtro-estado-admin" style="padding: 0.3rem; border-radius: 4px;">
-                    <option value="">Todos los Estados</option>
-                    <option value="1">Pendiente</option>
-                    <option value="2">En Proceso</option>
-                    <option value="3">Resuelto</option>
-                    <option value="4">Rechazado</option>
+        <!-- VISTA 2: Panel de Tabla y Operaciones -->
+        <section id="seccion-tabla-panel" class="tarjeta-panel d-none">
+          <div class="panel-header-flex pb-3 border-bottom mb-3">
+            <div class="d-flex align-items-center gap-3">
+              <button id="btn-volver-dashboard" class="btn btn-outline-secondary btn-sm fw-semibold rounded-2"><i class="bi bi-arrow-left me-1"></i> Volver al Resumen</button>
+              <h2 id="titulo-vista-actual" class="h4 fw-bold mb-0 text-dark">Gestión de Reclamos</h2>
+            </div>
+
+            <!-- Filtro Interno de Datos -->
+            <div id="contenedor-filtro-interno" class="filtro-interno">
+              <label for="filtro-estado-reclamo">Estado:</label>
+              <select id="filtro-estado-reclamo" class="form-select form-select-sm w-auto">
+                <option value="">Todos los Estados</option>
+                <option value="1">Pendiente</option>
+                <option value="2">En Proceso</option>
+                <option value="3">Resuelto</option>
+                <option value="4">Rechazado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="tabla-responsive">
+            <table class="tabla-admin">
+              <thead id="tabla-headers">
+                <tr>
+                  <th>#ID</th>
+                  <th>Título / Descripción</th>
+                  <th>Categoría</th>
+                  <th>Vecino</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-reclamos-body">
+                <tr>
+                  <td colspan="7">Cargando datos desde la API...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MODAL DE BOOTSTRAP: Cambiar Estado de Reclamo -->
+    <div class="modal fade" id="modalCambiarEstado" tabindex="-1" aria-labelledby="modalCambiarEstadoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="modal-header bg-dark text-white border-0">
+            <h5 class="modal-title fw-bold fs-6" id="modalCambiarEstadoLabel"><i class="bi bi-pencil-square me-2 text-primary"></i>Actualizar Estado del Reclamo</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="form-cambiar-estado">
+            <div class="modal-body p-4 bg-white">
+              <input type="hidden" id="modal-reclamo-id" />
+
+              <div class="mb-3">
+                <label for="modal-select-estado" class="form-label text-uppercase fw-bold text-muted extra-small">Nuevo Estado</label>
+                <select id="modal-select-estado" class="form-select" required>
+                  <option value="" disabled selected>Seleccione una opción...</option>
+                  <option value="1">🟡 Pendiente</option>
+                  <option value="2">🔵 En Proceso</option>
+                  <option value="3">🟢 Resuelto</option>
+                  <option value="4">🔴 Rechazado</option>
                 </select>
-            </div>
+              </div>
 
-            <div style="overflow-x: auto;">
-                <table class="tabla-admin">
-                    <thead>
-                        <tr>
-                            <th>#ID</th>
-                            <th>Título / Descripción</th>
-                            <th>Categoría</th>
-                            <th>Vecino</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-reclamos-body">
-                        <tr><td colspan="7">Cargando datos desde la API...</td></tr>
-                    </tbody>
-                </table>
+              <div class="mb-3">
+                <label for="modal-observacion" class="form-label text-uppercase fw-bold text-muted extra-small">Observación / Motivo</label>
+                <textarea id="modal-observacion" class="form-control" rows="3" placeholder="Detalle las razones del cambio de estado..." required></textarea>
+              </div>
             </div>
-        </section>
-    </main>
+            <div class="modal-footer bg-light border-top-0 px-4 py-3">
+              <button type="button" class="btn btn-outline-secondary btn-sm px-3 fw-semibold rounded-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary btn-sm px-4 fw-bold rounded-2">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
+    <!-- MODAL DE BOOTSTRAP: Crear / Editar Operador -->
+    <div class="modal fade" id="modalOperador" tabindex="-1" aria-labelledby="modalOperadorLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="modal-header bg-dark text-white border-0">
+            <h5 class="modal-title fw-bold fs-6" id="modalOperadorLabel"><i class="bi bi-person-plus-fill me-2 text-primary"></i><span id="modal-operador-titulo">Nuevo Operador</span></h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="form-operador">
+            <div class="modal-body p-4 bg-white">
+              <input type="hidden" id="operador-id" />
+
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label for="operador-nombre" class="form-label text-uppercase fw-bold text-muted extra-small">Nombre</label>
+                  <input type="text" id="operador-nombre" class="form-control form-control-sm" required placeholder="Ej: Juan" />
+                </div>
+                <div class="col-6">
+                  <label for="operador-apellido" class="form-label text-uppercase fw-bold text-muted extra-small">Apellido</label>
+                  <input type="text" id="operador-apellido" class="form-control form-control-sm" required placeholder="Ej: Pérez" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="operador-username" class="form-label text-uppercase fw-bold text-muted extra-small">Usuario</label>
+                <input type="text" id="operador-username" class="form-control form-control-sm" required placeholder="Ej: jperez" />
+              </div>
+
+              <div class="mb-3">
+                <label for="operador-email" class="form-label text-uppercase fw-bold text-muted extra-small">Correo Electrónico</label>
+                <input type="email" id="operador-email" class="form-control form-control-sm" required placeholder="ejemplo@vozvecinal.gob.ar" />
+              </div>
+
+              <div class="mb-3">
+                <label for="operador-password" class="form-label text-uppercase fw-bold text-muted extra-small">Contraseña</label>
+                <input type="password" id="operador-password" class="form-control form-control-sm" placeholder="••••••••" />
+                <small id="password-help" class="text-muted d-none" style="font-size: 0.7rem;">Dejar en blanco si no desea cambiar la contraseña.</small>
+              </div>
+
+              <div class="mb-3">
+                <label for="operador-rol" class="form-label text-uppercase fw-bold text-muted extra-small">Rol del Sistema</label>
+                <select id="operador-rol" class="form-select form-select-sm" required>
+                  <option value="" disabled selected>Seleccione un rol...</option>
+                  <option value="VECINO">🏡 VECINO</option>
+                  <option value="OPERADOR">👤 OPERADOR</option>
+                  <option value="ADMIN">🛡️ ADMIN</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer bg-light border-top-0 px-4 py-3">
+              <button type="button" class="btn btn-outline-secondary btn-sm px-3 fw-semibold rounded-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" id="btn-guardar-operador" class="btn btn-primary btn-sm px-4 fw-bold rounded-2">Guardar Operador</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="{% static 'js/admin/admin-dashboard.js' %}"></script>
-</body>
+  </body>
 </html>

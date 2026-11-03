@@ -1,0 +1,245 @@
+/* front-web\static\css\admin\estilo_panel.css */
+/* VozVecinal — Estilos Panel / Dashboard Admin (Bootstrap Integration) */
+.admin-body {
+    background-color: #f8fafc;
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.extra-small {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+}
+
+/* Header Fijo Superior */
+.header-admin-bar {
+    background-color: #0f172a;
+    color: #ffffff;
+    height: 60px;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom: 3px solid #2563eb;
+    box-sizing: border-box;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-icon-menu {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-icon-menu:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.brand-title {
+    display: flex;
+    align-items: center;
+}
+
+.badge-admin {
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+}
+
+.btn-logout {
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: #dc2626;
+}
+
+/* Layout y Sidebar Lateral Fija */
+.admin-layout {
+    display: flex;
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+}
+
+.admin-sidebar {
+    width: 250px;
+    background-color: #1e293b;
+    color: #cbd5e1;
+    flex-shrink: 0;
+    height: 100%;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
+}
+
+.admin-sidebar.closed {
+    margin-left: -250px;
+}
+
+.sidebar-nav {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: bold;
+    padding: 0.8rem 1.25rem 0.4rem 1.25rem;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background-color: #334155;
+    color: #ffffff;
+}
+
+.sidebar-link.active {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+/* Área Principal con Scroll */
+.admin-main-content {
+    flex-grow: 1;
+    padding: 1.75rem;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Tarjetas de Métricas Resumen */
+.tarjeta-metrica {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+}
+
+.tarjeta-metrica:hover {
+    transform: translateY(-2px);
+}
+
+.metrica-titulo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.metrica-numero {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+}
+
+.b-start-primary { border-left: 4px solid #0f172a; }
+.b-start-amarillo { border-left: 4px solid #d97706; }
+.b-start-azul { border-left: 4px solid #2563eb; }
+.b-start-verde { border-left: 4px solid #16a34a; }
+
+.metrica-amarillo { color: #d97706; }
+.metrica-azul { color: #2563eb; }
+.metrica-verde { color: #16a34a; }
+
+/* Panel de Tablas */
+.tarjeta-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filtro-interno {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.tabla-responsive {
+    overflow-x: auto;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.tabla-admin th, .tabla-admin td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.tabla-admin th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+}

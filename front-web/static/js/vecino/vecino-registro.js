@@ -1,5 +1,4 @@
 // front-web/static/js/vecino/vecino-registro.js
-// static/js/vecino/vecino-registro.js
 import { API_BASE_URL } from '../config/config.js';
 
 document.addEventListener('DOMContentLoaded', () => {

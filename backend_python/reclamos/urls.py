@@ -17,6 +17,7 @@ router.register(r'areas', AreaDependenciaViewSet, basename='area')
 router.register(r'categorias', CategoriaViewSet, basename='categoria')
 router.register(r'estados', EstadoViewSet, basename='estado')
 router.register(r'roles', RolViewSet, basename='rol')
+router.register(r'usuarios', UsuarioViewSet, basename='usuario')
 
 urlpatterns = [
     # CLASE 6: Autenticación Stateless con JWT
